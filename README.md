@@ -2,19 +2,60 @@
 
 This collection allows configuration of RNX UPDU devices running firmware 2.4 or greater.
 
+# Requirements
+
+The Python package [Paramiko](https://www.paramiko.org/) is required for successful ssh connection.
+
 # Usage
 
-To install from galaxy use the `ansible-galaxy collection` command:
+To install the collection from galaxy use the `ansible-galaxy collection` command:
 
 ```
 ansible-galaxy collection install rnx.updu
 ```
 
-The OS must be specified in the inventory:
+# Examples
 
+### Inventory file
+
+Example inventory file
+
+```yml
+---
+all:
+  hosts:
+    pdu-rack15-row4:
+      ansible_host: 10.2.18.80
+  vars:
+    ansible_ssh_user: admin
+    ansible_ssh_pass: admin
+    ansible_network_os: rnx.updu.updu
+    ansible_connection: network_cli
 ```
-ansible_network_os=rnx.updu.updu
+
+### Playbook
+
+Example Playbook file
+
+```yml
+---
+- hosts: all
+  tasks:
+  - name: Gather facts
+    rnx.updu.updu_facts:
+
+  - name: Configure device hostname
+    rnx.updu.updu_config:
+      config:
+        - system
+        - hostname {{inventory_hostname}}
+
+  - name: Disable Outlet 1
+    rnx.updu.updu_commands:
+      commands:
+        - outlet off Outlet1.1
 ```
+
 
 # Development
 
