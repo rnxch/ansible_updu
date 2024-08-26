@@ -18,6 +18,13 @@ def load_config(module, commands):
     connection = get_connection(module)
     connection.edit_config(commands)
 
+def write_config(module):
+    connection = get_connection(module)
+    try:
+        return connection.run_commands(commands=["write"], check_rc=True)
+    except ConnectionError as exc:
+        module.fail_json(msg=to_text(exc))
+
 
 def get_capabilities(module):
     if hasattr(module, "_updu_capabilities"):

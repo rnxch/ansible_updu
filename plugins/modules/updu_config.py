@@ -5,7 +5,7 @@
 
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.rnx.updu.plugins.module_utils.network.updu.updu import load_config
+from ansible_collections.rnx.updu.plugins.module_utils.network.updu.updu import load_config, write_config
 
 DOCUMENTATION = '''
 ---
@@ -28,6 +28,11 @@ options:
     required: true
     type: list
     elements: raw
+  write:
+    description:
+      - Whether to save active configuration after config is applied or not.   
+    required: false
+    default: False
 '''
 
 EXAMPLES = """
@@ -40,6 +45,7 @@ tasks:
 
 - name: Configure outlet names
   rnx.updu.updu_config:
+    write: true
     config:
       - object Outlet1.1
       - name SRV01
@@ -60,6 +66,7 @@ commands:
 def main():
     argument_spec = dict(
         config=dict(type='list', elements='raw', required=True),
+        write=dict(type='bool', default=False),
     )
 
     module = AnsibleModule(
@@ -75,12 +82,16 @@ def main():
         result['warnings'] = warnings
 
     commands = module.params["config"]
+    wr_config: bool = module.params["write"]
 
     result['commands'] = commands
 
     if commands:
         if not module.check_mode:
             load_config(module, commands)
+
+    if wr_config:
+        write_config(module)
 
     module.exit_json(**result)
 
