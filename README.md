@@ -2,11 +2,15 @@
 
 This collection allows configuration of RNX UPDU devices running firmware 2.4 or greater.
 
-# Requirements
+Repository: [https://github.com/rnxch/ansible_updu](https://github.com/rnxch/ansible_updu)
+
+Ansible Galaxy: [https://galaxy.ansible.com/ui/repo/published/rnx/updu](https://galaxy.ansible.com/ui/repo/published/rnx/updu) 
+
+## Requirements
 
 The Python package [Paramiko](https://www.paramiko.org/) is required for successful ssh connection.
 
-# Usage
+## Usage
 
 To install the collection from galaxy use the `ansible-galaxy collection` command:
 
@@ -14,7 +18,7 @@ To install the collection from galaxy use the `ansible-galaxy collection` comman
 ansible-galaxy collection install rnx.updu
 ```
 
-# Examples
+## Examples
 
 ### Inventory file
 
