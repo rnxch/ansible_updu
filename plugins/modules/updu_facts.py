@@ -13,7 +13,7 @@ module: updu_facts
 author: RNX
 short_description: Collects facts from remote UPDU devices.
 description:
-- Collects device facts
+  - Collects device facts
 notes:
   Following parameters must be set:
   - ansible_network_os=rnx.updu.updu 
@@ -22,20 +22,20 @@ notes:
   - ansible_password=<DEVICE PASSWORD> 
 '''
 
-EXAMPLES = """
+EXAMPLES = '''
 # Facts are gathered explicitly using rnx.updu.updu_facts
 gather_facts: false
 
 tasks:
-- name: Gather facts
-  rnx.updu.updu_facts:
+  - name: Gather facts
+    rnx.updu.updu_facts:
+  
+  - name: Show facts
+    debug:
+      var: ansible_facts
+'''
 
-- name: Show facts
-  debug:
-    var: ansible_facts
-"""
-
-RETURN = """
+RETURN = '''
 net_hostname:
   description: Hostname of device
   returned: always
@@ -48,7 +48,7 @@ net_version:
   description: Running firmware version
   returned: failed
   type: string
-"""
+'''
 
 import platform
 import re

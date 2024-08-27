@@ -74,12 +74,12 @@ stdout:
   description: Output of command
   returned: always
   type: list or string depends on which option was used
-  sample: ['...', '...'] or '...'
+  sample: "['...', '...'] or '...'"
 stdout_lines:
   description: Output of command
   returned: always
   type: list
-  sample: ['...', '...']
+  sample: "['...', '...']"
 """
 
 def to_lines(stdout):
