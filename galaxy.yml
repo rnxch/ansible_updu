@@ -1,6 +1,6 @@
 namespace: rnx
 name: updu
-version: 1.0.0
+version: 1.0.2
 
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
@@ -28,7 +28,7 @@ documentation: https://github.com/rnxch/ansible_updu
 homepage: http://rnx.ch
 
 # The URL to the collection issue tracker
-issues: https://www.rnx.ch/contactus
+issues: https://github.com/rnxch/ansible_updu/issues
 
 # A list of file glob-like patterns used to filter any files or directories that should not be included in the build
 # artifact. A pattern is matched from the relative path of the file or directory of the collection directory. This

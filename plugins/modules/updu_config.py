@@ -14,9 +14,9 @@ author: RNX
 short_description: Run config commands on RNX UPDU devices
 description: 
   Executing commands in the configuration context of a RNX UPDU device. 
-  See `CLI reference manual` for command reference on [rnx.ch/support](https://rnx.ch/support) 
+  See `CLI reference manual` for command reference on https://rnx.ch/support)
 notes:
-  Following parameters must be set:
+  - "Following parameters must be set:"
   - ansible_network_os=rnx.updu.updu 
   - ansible_connection=network_cli 
   - ansible_user=<DEVICE USERNAME> 
@@ -32,7 +32,7 @@ options:
     description:
       - Whether to save active configuration after config is applied or not.   
     required: false
-    default: False
+    default: "false"
 '''
 
 EXAMPLES = """
@@ -62,7 +62,6 @@ commands:
   type: list
   sample: ['...', '...']
 """
-
 def main():
     argument_spec = dict(
         config=dict(type='list', elements='raw', required=True),

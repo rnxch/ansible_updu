@@ -15,7 +15,7 @@ short_description: Collects facts from remote UPDU devices.
 description:
   - Collects device facts
 notes:
-  Following parameters must be set:
+  - "Following parameters must be set:"
   - ansible_network_os=rnx.updu.updu 
   - ansible_connection=network_cli 
   - ansible_user=<DEVICE USERNAME> 
@@ -49,6 +49,7 @@ net_version:
   returned: failed
   type: string
 '''
+
 
 import platform
 import re

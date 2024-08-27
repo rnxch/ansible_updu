@@ -17,10 +17,10 @@ module: updu_commands
 author: RNX
 short_description: Run commands on RNX UPDU devices
 description: 
-  Executing commands on a RNX UPDU device. 
-  See `CLI reference manual` for command reference on [rnx.ch/support](https://rnx.ch/support) 
+  "Executing commands on a RNX UPDU device. 
+  See `CLI reference manual` for command reference on https://rnx.ch/support" 
 notes:
-  Following parameters must be set:
+  - "Following parameters must be set:"
   - ansible_network_os=rnx.updu.updu 
   - ansible_connection=network_cli 
   - ansible_user=<DEVICE USERNAME> 
