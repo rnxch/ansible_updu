@@ -55,6 +55,7 @@ Example Playbook file
 ```yml
 ---
 - hosts: all
+  gather_facts: false
   tasks:
     - name: Gather facts
       rnx.updu.updu_facts:

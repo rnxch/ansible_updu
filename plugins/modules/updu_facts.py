@@ -44,6 +44,10 @@ net_model:
   description: UPDU model name
   returned: always
   type: string
+net_serialnum:
+  description: UPDU serial number
+  returned: always
+  type: int
 net_version:
   description: Running firmware version
   returned: failed
@@ -104,7 +108,7 @@ class Default(FactsBase):
 
         platform_facts["system"] = device_info["network_os"]
 
-        for item in ("model", "version", "hostname"):
+        for item in ("model", "version", "hostname", "serialnum"):
             val = device_info.get("network_os_%s" % item)
             if val:
                 platform_facts[item] = val
@@ -154,7 +158,7 @@ def main():
         if subset not in VALID_SUBSETS:
             module.fail_json(
                 msg="Subset must be one of [%s], got %s"
-                % (", ".join(VALID_SUBSETS), subset)
+                    % (", ".join(VALID_SUBSETS), subset)
             )
 
         if exclude:

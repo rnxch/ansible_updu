@@ -47,6 +47,10 @@ class Cliconf(CliconfBase):
         if match:
             device_info["network_os_version"] = match.group(1)
 
+        match = re.search(r"^PDU serial-number:\s+(\d+)", data, re.M)
+        if match:
+            device_info["network_os_serialnum"] = int(match.group(1))
+
         return device_info
 
     # @enable_mode
