@@ -67,19 +67,20 @@ class Cliconf(CliconfBase):
 
         if commit:
             self.send_command(b'configure')
-            for line in to_list(candidate):
-                if not isinstance(line, Mapping):
-                    line = {"command": line}
+            try:
+                for line in to_list(candidate):
+                    if not isinstance(line, Mapping):
+                        line = {"command": line}
 
-                cmd = line["command"]
-                if cmd != "end" and cmd[0] != "#":
-                    res = self.send_command(**line)
-                    if res and "ERR:" in res:
-                        raise Exception(f"[{cmd}] {res}")
-                    results.append(res)
-                    requests.append(cmd)
-
-            self.send_command(b'end')
+                    cmd = line["command"]
+                    if cmd != "end" and cmd[0] != "#":
+                        res = self.send_command(**line)
+                        if res and "ERR:" in res:
+                            raise Exception(f"[{cmd}] {res}")
+                        results.append(res)
+                        requests.append(cmd)
+            finally:
+                self.send_command(b'end')
         else:
             raise ValueError("check mode is not supported")
 
