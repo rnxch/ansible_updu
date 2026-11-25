@@ -8,7 +8,8 @@ Ansible Galaxy: [https://galaxy.ansible.com/ui/repo/published/rnx/updu](https://
 
 ## Requirements
 
-The Python package [Paramiko](https://www.paramiko.org/) is required for successful ssh connection.
+The Python package [ansible-pylibssh](https://pypi.org/project/ansible-pylibssh/)
+(`pip install ansible-pylibssh`) is required for ssh connection.
 
 ## Usage
 
@@ -46,6 +47,7 @@ all:
     ansible_ssh_pass: admin
     ansible_network_os: rnx.updu.updu
     ansible_connection: network_cli
+    ansible_network_cli_ssh_type: libssh
 ```
 
 ### Playbook
