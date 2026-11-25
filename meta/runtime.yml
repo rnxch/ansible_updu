@@ -1,2 +1,10 @@
 ---
 requires_ansible: '>=2.11.0'
+plugin_routing:
+  modules:
+    updu_commands:
+      action_plugin: rnx.updu.updu
+    updu_config:
+      action_plugin: rnx.updu.updu
+    updu_facts:
+      action_plugin: rnx.updu.updu
