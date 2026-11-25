@@ -12,7 +12,7 @@ from ansible.plugins.terminal import TerminalBase
 class TerminalModule(TerminalBase):
 
     terminal_stdout_re = [
-        re.compile(br'>\ |#\ |\$\ ')
+        re.compile(br'(\S+>|\S+\([^)]+\)#) ')
     ]
 
     terminal_stderr_re = [
