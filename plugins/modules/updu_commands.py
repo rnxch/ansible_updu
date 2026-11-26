@@ -105,7 +105,6 @@ def main():
     commands = module.params["commands"]
 
     if commands:
-        result['warnings'] = list()
 
         responses = run_commands(module, commands)
 
@@ -116,7 +115,6 @@ def main():
         })
     else:
         command = module.params["command"]
-        result['warnings'] = list()
         responses = run_commands(module, command)
         result.update({
             'changed': True,

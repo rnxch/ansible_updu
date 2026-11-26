@@ -3,9 +3,8 @@
 # Copyright (C) 2020, Riedo Networks Ltd - All Rights Reserved
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.rnx.updu.plugins.module_utils.network.updu.updu import load_config, write_config
+from ansible_collections.rnx.updu.plugins.module_utils.network.updu.updu import load_config, write_config, run_commands
 
 DOCUMENTATION = '''
 ---
@@ -62,6 +61,24 @@ commands:
   type: list
   sample: ['...', '...']
 """
+
+def get_config_backup(module):
+    output = None
+
+    try:
+        output = run_commands(module, ["show config backup show-secrets"])[0]
+    except Exception:
+        pass
+
+    cfg = ""
+    for line in str(output or "").splitlines():
+        if not line.startswith("#"):
+            cfg += line
+
+    return cfg
+
+
+
 def main():
     argument_spec = dict(
         config=dict(type='list', elements='raw', required=True),
@@ -73,12 +90,8 @@ def main():
         supports_check_mode=False
     )
 
-    warnings = list()
+    result = {'changed': False}
 
-    result = {'changed': True}
-
-    if warnings:
-        result['warnings'] = warnings
 
     commands = module.params["config"]
     wr_config: bool = module.params["write"]
@@ -87,7 +100,10 @@ def main():
 
     if commands:
         if not module.check_mode:
+            before = get_config_backup(module)
             load_config(module, commands)
+            after = get_config_backup(module)
+            result['changed'] = before != after
 
     if wr_config:
         write_config(module)

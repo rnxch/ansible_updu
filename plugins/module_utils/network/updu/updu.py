@@ -7,12 +7,10 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import platform
-import re
 import json
 
 from ansible.module_utils.connection import Connection, ConnectionError
-from ansible.module_utils._text import to_text
+from  ansible.module_utils.common.text.converters import to_text
 
 def load_config(module, commands):
     connection = get_connection(module)

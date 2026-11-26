@@ -18,12 +18,11 @@ description:
 import re
 import json
 
-from itertools import chain
-
-from ansible.module_utils._text import to_bytes, to_text
-from ansible.module_utils.common._collections_compat import Mapping
+from ansible.module_utils.common.text.converters import to_text
+from collections.abc import Mapping
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import to_list
-from ansible.plugins.cliconf import CliconfBase, enable_mode
+from ansible.plugins.cliconf import CliconfBase
+from ansible.errors import AnsibleConnectionFailure
 
 class Cliconf(CliconfBase):
     def get_device_info(self):
@@ -66,19 +65,20 @@ class Cliconf(CliconfBase):
 
         if commit:
             self.send_command(b'configure')
-            for line in to_list(candidate):
-                if not isinstance(line, Mapping):
-                    line = {"command": line}
+            try:
+                for line in to_list(candidate):
+                    if not isinstance(line, Mapping):
+                        line = {"command": line}
 
-                cmd = line["command"]
-                if cmd != "end" and cmd[0] != "#":
-                    res = self.send_command(**line)
-                    if res and "ERR:" in res:
-                        raise Exception(f"[{cmd}] {res}")
-                    results.append(res)
-                    requests.append(cmd)
-
-            self.send_command(b'end')
+                    cmd = line["command"]
+                    if cmd != "end" and cmd[0] != "#":
+                        res = self.send_command(**line)
+                        if res and "ERR:" in res:
+                            raise Exception(f"[{cmd}] {res}")
+                        results.append(res)
+                        requests.append(cmd)
+            finally:
+                self.send_command(b'end')
         else:
             raise ValueError("check mode is not supported")
 
